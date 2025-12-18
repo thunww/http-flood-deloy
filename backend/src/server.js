@@ -14,6 +14,7 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: function (origin, callback) {
+      // Cho phép Postman, curl, health-check
       if (!origin) return callback(null, true);
 
       if (allowedOrigins.includes(origin) || origin.endsWith(".pages.dev")) {
@@ -26,7 +27,7 @@ app.use(
   })
 );
 
-app.options("*", cors());
+// ❌ KHÔNG DÙNG app.options("*", cors());
 
 app.use(express.json());
 
@@ -50,7 +51,10 @@ app.use("/api", authRoute);
 app.use("/api/products", productRoute);
 
 app.get("/api/health", (req, res) => {
-  res.json({ status: "OK", instance: INSTANCE_ID });
+  res.json({
+    status: "OK",
+    instance: INSTANCE_ID,
+  });
 });
 
 app.listen(8080, () => console.log(`[${INSTANCE_ID}] BE running on 8080`));

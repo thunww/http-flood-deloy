@@ -8,8 +8,7 @@ WORKDIR /app
 
 # ===== DEPENDENCIES =====
 COPY package*.json ./
-RUN npm ci --only=production
-
+RUN npm ci 
 # ===== SOURCE =====
 COPY . .
 

@@ -1,12 +1,20 @@
 FROM node:20-alpine
 
+# ===== ENV =====
+ENV NODE_ENV=production
+
+# ===== WORKDIR =====
 WORKDIR /app
 
+# ===== DEPENDENCIES =====
 COPY package*.json ./
-RUN npm install --production
+RUN npm ci --only=production
 
+# ===== SOURCE =====
 COPY . .
 
+# ===== PORT =====
 EXPOSE 8080
 
+# ===== START =====
 CMD ["node", "src/server.js"]
